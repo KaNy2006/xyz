@@ -1,5 +1,40 @@
-<%- include('../partials/header') %><section class="page-title"><h1><%= build.name %></h1><p>Mô phỏng lắp ráp dành riêng cho cấu hình bạn đã mua.</p></section>
+<%- include('../partials/header') %>
+<section class="page-title"><h1><%= build.name %></h1><p>Mô phỏng lắp ráp dành riêng cho cấu hình bạn đã mua.</p></section>
 <div class="builder-summary"><span>Trạng thái: <strong><%= build.status %></strong></span><span>Đơn hàng #<%= build.order_id %></span></div>
-<section class="assembly-simulator"><h2>Thợ PC ảo · Quy trình lắp ráp</h2><% const steps=[['Mainboard','Chuẩn bị mainboard và kiểm tra socket.'],['CPU','Đặt CPU đúng chiều vào socket và khóa chốt.'],['RAM','Lắp RAM vào khe phù hợp, ấn đều hai đầu.'],['SSD','Lắp SSD vào khe M.2 / SATA tương ứng.'],['Cooler','Bôi keo tản nhiệt và lắp bộ tản CPU.'],['Case','Đưa mainboard vào case và cố định ốc.'],['PSU','Lắp nguồn và chuẩn bị dây cấp điện.'],['GPU','Lắp GPU vào khe PCIe và cố định.']]; steps.forEach((s,i)=>{ const p=build.parts[s[0]]; %><article class="assembly-step"><span class="step-no"><%= i+1 %></span><div><h3><%= s[0] %> · <%= p?p.name:'Chưa có' %></h3><p><%= s[1] %></p></div></article><% }) %></section>
-<section class="analysis-grid"><article class="analysis-card"><h2>Compatibility</h2><% build.compatibility.issues.forEach(i=>{ %><p class="<%= i.level==='error'?'text-danger':'text-success' %>"><%= i.message %></p><% }) %></article><article class="analysis-card"><h2>Power</h2><p>Ước tính: <strong><%= build.power.estimated %>W</strong></p><p>PSU: <strong><%= build.power.psu %>W</strong></p><p><%= build.power.message %></p></article><article class="analysis-card"><h2>Gaming 1440p</h2><p class="score-big"><%= build.performance.overall %>/100</p><p>CPU <%= build.performance.cpu %> · GPU <%= build.performance.gpu %> · RAM <%= build.performance.ram %> · SSD <%= build.performance.ssd %></p></article></section>
-<% if(build.status!=='assembled'){ %><form action="/my-pc/<%= build.id %>/assembled" method="post"><button class="btn primary">Hoàn tất mô phỏng lắp ráp</button></form><% }else{ %><section class="builder-ready"><h2>PC đã hoàn thiện</h2><p>Bước tiếp theo của roadmap là phân tích bottleneck sâu và đề xuất nâng cấp từ chính cấu hình này.</p></section><% } %><%- include('../partials/footer') %>
+
+<section class="assembly-simulator">
+  <h2>Thợ PC ảo · Quy trình lắp ráp</h2>
+  <% const steps=[['Mainboard','Chuẩn bị mainboard và kiểm tra socket.'],['CPU','Đặt CPU đúng chiều vào socket và khóa chốt.'],['RAM','Lắp RAM vào khe phù hợp, ấn đều hai đầu.'],['SSD','Lắp SSD vào khe M.2 / SATA tương ứng.'],['Cooler','Bôi keo tản nhiệt và lắp bộ tản CPU.'],['Case','Đưa mainboard vào case và cố định ốc.'],['PSU','Lắp nguồn và chuẩn bị dây cấp điện.'],['GPU','Lắp GPU vào khe PCIe và cố định.']]; %>
+  <% steps.forEach((s,i)=>{ const p=build.parts[s[0]]; %>
+    <article class="assembly-step"><span class="step-no"><%= i+1 %></span><div><h3><%= s[0] %> · <%= p?p.name:'Chưa có' %></h3><p><%= s[1] %></p></div></article>
+  <% }) %>
+</section>
+
+<section class="analysis-grid">
+  <article class="analysis-card"><h2>Compatibility</h2><% build.compatibility.issues.forEach(i=>{ %><p class="<%= i.level==='error'?'text-danger':'text-success' %>"><%= i.message %></p><% }) %></article>
+  <article class="analysis-card"><h2>Power</h2><p>Ước tính: <strong><%= build.power.estimated %>W</strong></p><p>PSU: <strong><%= build.power.psu %>W</strong></p><p><%= build.power.message %></p></article>
+  <article class="analysis-card"><h2>Gaming 1440p</h2><p class="score-big"><%= build.performance.overall %>/100</p><p>CPU <%= build.performance.cpu %> · GPU <%= build.performance.gpu %> · RAM <%= build.performance.ram %> · SSD <%= build.performance.ssd %></p></article>
+</section>
+
+<section class="section-head"><h2>Phân tích bottleneck</h2></section>
+<div class="analysis-grid">
+  <% build.bottleneck.results.forEach(r=>{ %>
+    <article class="analysis-card"><h3><%= r.target %> · <%= r.level.toUpperCase() %></h3><p><%= r.message %></p></article>
+  <% }) %>
+</div>
+
+<section class="section-head"><h2>Gợi ý nâng cấp</h2></section>
+<div class="upgrade-grid">
+  <% Object.entries(build.recommendations).forEach(([cat,list])=>{ if(list.length){ %>
+    <article class="analysis-card"><h3><%= cat %></h3>
+      <% list.forEach(p=>{ %><p><a href="/products/<%= p.id %>"><strong><%= p.name %></strong></a><br><span><%= p.performance %>/100 · <%= p.price.toLocaleString('vi-VN') %>đ</span></p><% }) %>
+    </article>
+  <% } }) %>
+</div>
+
+<% if(build.status!=='assembled'){ %>
+<form action="/my-pc/<%= build.id %>/assembled" method="post"><button class="btn primary">Hoàn tất mô phỏng lắp ráp</button></form>
+<% }else{ %>
+<section class="builder-ready"><h2>PC đã hoàn thiện</h2><p>Bạn có thể tiếp tục xem điểm yếu và chọn linh kiện nâng cấp từ chính cửa hàng.</p></section>
+<% } %>
+<%- include('../partials/footer') %>
