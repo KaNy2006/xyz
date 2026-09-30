@@ -1,0 +1,5 @@
+const express=require("express");const Home=require("../controllers/HomeController");const Auth=require("../controllers/AuthController");const Product=require("../controllers/ProductController");const Cart=require("../controllers/CartController");const Builder=require("../controllers/PCBuilderController");const{requireLogin}=require("../config/AuthFilter");const router=express.Router();
+router.get("/",Home.index);router.get("/products",Product.list);router.get("/products/:id",Product.detail);router.get("/pc-builder",Builder.show);router.get("/api/pc-builder/compatible",Builder.compatible);
+router.get("/cart",Cart.show);router.post("/cart/add/:id",requireLogin,Cart.add);router.post("/cart/update/:id",requireLogin,Cart.update);router.post("/cart/remove/:id",requireLogin,Cart.remove);router.post("/checkout",requireLogin,Cart.checkout);
+router.get("/login",Auth.showLogin);router.post("/login",Auth.login);router.get("/register",Auth.showRegister);router.post("/register",Auth.register);router.post("/logout",Auth.logout);
+module.exports=router;
