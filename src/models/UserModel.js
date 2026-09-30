@@ -1,6 +1,10 @@
-const db=require("../config/DBConnection");
-function safeUser(u){if(!u)return null;const{password:_p,...rest}=u;return rest;}
-async function findByEmail(email){const[rows]=await db.execute("SELECT * FROM users WHERE email=? LIMIT 1",[email]);return rows[0]||null;}
-async function create({name,email,password}){const[r]=await db.execute("INSERT INTO users (name,email,password,role) VALUES (?,?,?,'customer')",[name,email,password]);const[rows]=await db.execute("SELECT * FROM users WHERE id=? LIMIT 1",[r.insertId]);return safeUser(rows[0]);}
-async function verify(email,password){const u=await findByEmail(email);if(!u||u.password!==password)return null;return safeUser(u);}
+const db=require("../config/LocalDatabase");
+function safeUser(u){if(!u)return null;const{password:_p,...rest}=u;return JSON.parse(JSON.stringify(rest));}
+async function findByEmail(email){return db.read().users.find(u=>u.email===email)||null;}
+async function create({name,email,password}){
+  const data=db.read();if(data.users.some(u=>u.email===email))throw new Error("Email đã được sử dụng.");
+  const user={id:db.nextId(data,"users"),name,email,password,role:"customer",created_at:new Date().toISOString()};
+  data.users.push(user);db.save(data);return safeUser(user);
+}
+async function verify(email,password){const u=await findByEmail(email);return u&&u.password===password?safeUser(u):null;}
 module.exports={findByEmail,create,verify};
