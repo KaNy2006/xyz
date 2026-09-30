@@ -1,5 +1,47 @@
 # 🖥️ Bán Linh Kiện & Mô Phỏng PC
 
+## ⚡ Chạy nhanh trên Codespaces
+
+Project hiện được cấu hình theo chế độ **zero-setup demo**. Database local và 80 sản phẩm sẽ tự được tạo ở lần chạy đầu tiên.
+
+Chỉ cần:
+
+```bash
+npm install
+npm start
+```
+
+Sau đó mở **Port 3000**. Codespaces đã được cấu hình tự forward và mở trang web.
+
+Không cần:
+- Cài MySQL.
+- Tạo database thủ công.
+- Import `schema.sql`.
+- Chạy seed riêng.
+- Tạo file `.env` để demo.
+
+Tài khoản mẫu:
+
+```text
+Admin:
+admin@store.test
+admin123
+
+Customer:
+user@store.test
+user123
+```
+
+Nếu muốn đưa database demo về trạng thái ban đầu:
+
+```bash
+npm run reset-db
+```
+
+> File `database/schema.sql` được giữ lại làm tài liệu/định hướng cho phiên bản MySQL sau này; runtime demo hiện tại dùng local database để Codespaces chạy ngay.
+
+---
+
 Website bán linh kiện máy tính kết hợp trải nghiệm **xây dựng, mua, lắp ráp mô phỏng, đánh giá hiệu năng và nâng cấp PC**.
 
 Mục tiêu của dự án là mô tả hành trình của một người dùng mới bắt đầu tìm hiểu PC:
