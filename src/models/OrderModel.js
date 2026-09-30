@@ -1,7 +1,20 @@
-const db=require("../config/DBConnection");const ProductModel=require("./ProductModel");
-function normalizeOrder(r){return{id:r.id,customer:r.customer_name,total:Number(r.total),status:r.status,createdAt:r.created_at instanceof Date?r.created_at.toISOString().slice(0,10):String(r.created_at).slice(0,10)};}
-async function getAll(){const [rows]=await db.execute("SELECT * FROM orders ORDER BY id DESC");return rows.map(normalizeOrder);}
-async function create({user,cart}){const c=await db.getConnection();try{await c.beginTransaction();const total=cart.reduce((s,i)=>s+i.product.price*i.quantity,0);const [o]=await c.execute("INSERT INTO orders (user_id,customer_name,total,status) VALUES (?,?,?,'Chờ duyệt')",[user?.id||null,user?.name||"Khach vang lai",total]);for(const item of cart){await c.execute("INSERT INTO order_items (order_id,product_id,product_name,price,quantity) VALUES (?,?,?,?,?)",[o.insertId,item.product.id,item.product.name,item.product.price,item.quantity]);await ProductModel.updateStock(item.product.id,item.quantity,c);}await c.commit();return o.insertId;}catch(e){await c.rollback();throw e;}finally{c.release();}}
-async function updateStatus(id,status){await db.execute("UPDATE orders SET status=? WHERE id=?",[status,Number(id)]);}
-async function getRevenueSummary(){const [rows]=await db.execute(`SELECT COALESCE(SUM(total),0) revenue,COUNT(*) orders,SUM(CASE WHEN status='Chờ duyệt' THEN 1 ELSE 0 END) pending FROM orders`);return{revenue:Number(rows[0].revenue),orders:Number(rows[0].orders),pending:Number(rows[0].pending)};}
+const db=require("../config/LocalDatabase");
+function normalizeOrder(r){return{id:r.id,customer:r.customer_name,total:Number(r.total),status:r.status,createdAt:String(r.created_at).slice(0,10),user_id:r.user_id};}
+async function getAll(){return db.read().orders.slice().sort((a,b)=>b.id-a.id).map(normalizeOrder);}
+async function create({user,cart}){
+  const data=db.read();
+  for(const item of cart){const p=data.products.find(x=>x.id===item.product.id);if(!p||p.stock<item.quantity)throw new Error(`${item.product.name} không đủ tồn kho.`);}
+  const id=db.nextId(data,"orders"),total=cart.reduce((s,i)=>s+i.product.price*i.quantity,0);
+  data.orders.push({id,user_id:user?.id||null,customer_name:user?.name||"Khách vãng lai",total,status:"Chờ duyệt",created_at:new Date().toISOString()});
+  for(const item of cart){
+    const p=data.products.find(x=>x.id===item.product.id);p.stock-=item.quantity;
+    data.orderItems.push({id:db.nextId(data,"orderItems"),order_id:id,product_id:p.id,product_name:p.name,price:p.price,quantity:item.quantity});
+  }
+  db.save(data);return id;
+}
+async function updateStatus(id,status){const data=db.read(),o=data.orders.find(x=>x.id===Number(id));if(o){o.status=status;db.save(data);}return o||null;}
+async function getRevenueSummary(){
+  const orders=db.read().orders,active=orders.filter(o=>o.status!=="Đã hủy");
+  return{revenue:active.reduce((s,o)=>s+Number(o.total),0),orders:orders.length,pending:orders.filter(o=>o.status==="Chờ duyệt").length};
+}
 module.exports={getAll,create,updateStatus,getRevenueSummary};
