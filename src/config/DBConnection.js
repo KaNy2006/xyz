@@ -1,3 +1,2 @@
-const mysql=require("mysql2/promise");const fs=require("fs");const path=require("path");
-const envPath=path.join(__dirname,"..","..",".env");if(fs.existsSync(envPath)){fs.readFileSync(envPath,"utf8").split(/\r?\n/).forEach(line=>{const t=line.trim();if(!t||t.startsWith("#")||!t.includes("="))return;const [k,...v]=t.split("=");if(!process.env[k])process.env[k]=v.join("=").trim();});}
-module.exports=mysql.createPool({host:process.env.DB_HOST||"localhost",port:Number(process.env.DB_PORT||3306),user:process.env.DB_USER||"root",password:process.env.DB_PASS||"200606",database:process.env.DB_NAME||"computer_component_store",waitForConnections:true,connectionLimit:10});
+// Compatibility shim: development now uses a zero-setup local database.
+module.exports=require("./LocalDatabase");
