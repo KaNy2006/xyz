@@ -1,5 +1,3 @@
-const db=require("../src/config/DBConnection");
-
 const P=[];
 const add=(name,category,brand,price,stock,performance,specs,featured=0)=>P.push({name,category,brand,price,stock,performance,specs,featured});
 
@@ -109,13 +107,4 @@ const add=(name,category,brand,price,stock,performance,specs,featured=0)=>P.push
 
 const image={CPU:"/uploads/cpu.svg",GPU:"/uploads/gpu.svg",Mainboard:"/uploads/mainboard.svg",RAM:"/uploads/ram.svg",SSD:"/uploads/ssd.svg",PSU:"/uploads/psu.svg",Case:"/uploads/case.svg",Cooler:"/uploads/cooler.svg"};
 
-(async()=>{
-  for(const p of P){
-    await db.execute(`INSERT INTO products(name,category,brand,price,stock,image,featured,performance,specs)
-      VALUES(?,?,?,?,?,?,?,?,?)
-      ON DUPLICATE KEY UPDATE category=VALUES(category),brand=VALUES(brand),price=VALUES(price),stock=VALUES(stock),image=VALUES(image),featured=VALUES(featured),performance=VALUES(performance),specs=VALUES(specs)`,
-      [p.name,p.category,p.brand,p.price,p.stock,image[p.category],p.featured,p.performance,JSON.stringify(p.specs)]);
-  }
-  console.log(`Seeded ${P.length} products (10 per category).`);
-  await db.end();
-})().catch(async e=>{console.error(e);await db.end();process.exit(1);});
+module.exports={products:P.map((p,i)=>({...p,id:i+1,image:image[p.category]})),image};
