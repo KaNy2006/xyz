@@ -22,3 +22,19 @@
 .sim2d-hint{padding:14px 16px;border-radius:10px;background:#f0fdf4;border:1px solid #bbf7d0}.sim2d-hint p{margin:4px 0 0;color:#475569}
 @media(max-width:900px){.sim2d-layout{grid-template-columns:1fr}.sim2d-parts{border-right:0;border-bottom:1px solid var(--line)}.sim2d-progress{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:560px){.sim2d-toolbar,.sim2d-workbench-head{align-items:flex-start;flex-direction:column}.sim2d-progress{grid-template-columns:repeat(2,1fr)}.sim2d-case{min-height:300px;padding:10px}}
+
+.sim2d-progress-item.is-active{color:var(--primary-dark);font-weight:800}
+.sim2d-progress-item.is-active span{background:var(--primary);color:#fff}
+.sim2d-progress-item.is-done{color:#065f46;font-weight:800}
+.sim2d-progress-item.is-done span{background:#d1fae5;color:#065f46}
+.sim2d-part.is-active{border-color:var(--primary);box-shadow:0 0 0 2px rgba(15,118,110,.12)}
+.sim2d-board-zone.is-active{background:rgba(15,118,110,.14);box-shadow:inset 0 0 0 2px rgba(15,118,110,.18)}
+.sim2d-board-zone.is-done{border-style:solid;background:rgba(16,185,129,.08)}
+.sim2d-board-placeholder{display:grid;gap:6px;text-align:center;padding:12px}
+.sim2d-board-placeholder small{font-weight:600;color:#64748b}
+.sim2d-install-btn{position:absolute;left:50%;bottom:14px;transform:translateX(-50%)}
+.sim2d-installed-part{position:absolute;inset:8%;display:grid;grid-template-columns:90px 1fr;gap:14px;align-items:center;padding:16px;background:#fff;border:2px solid #10b981;border-radius:12px;box-shadow:0 8px 24px rgba(15,23,42,.12)}
+.sim2d-installed-part img{width:90px;height:90px;object-fit:contain;background:#eef6f5;border-radius:10px}
+.sim2d-installed-part p{margin:4px 0 0;color:var(--muted)}
+.sim2d-status.is-active{background:#ccfbf1;color:#115e59}
+.sim2d-status.is-done{background:#d1fae5;color:#065f46}
