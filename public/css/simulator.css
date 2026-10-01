@@ -38,3 +38,12 @@
 .sim2d-installed-part p{margin:4px 0 0;color:var(--muted)}
 .sim2d-status.is-active{background:#ccfbf1;color:#115e59}
 .sim2d-status.is-done{background:#d1fae5;color:#065f46}
+
+.sim2d-cpu-socket{position:absolute;right:8%;top:10%;width:34%;height:38%;display:grid;place-items:center;padding:8px;border:2px dashed #64748b;border-radius:10px;background:#f8fafc;color:#64748b;z-index:2}
+.sim2d-cpu-socket.is-active{border-color:var(--primary);background:#ecfdf5;color:var(--primary-dark);box-shadow:0 0 0 2px rgba(15,118,110,.12)}
+.sim2d-cpu-socket.is-done{border-style:solid;border-color:#10b981;background:#f0fdf4}
+.sim2d-cpu-btn{min-height:34px;padding:0 10px;font-size:13px}
+.sim2d-installed-cpu{display:grid;grid-template-columns:46px 1fr;gap:8px;align-items:center;width:100%;padding:8px;background:#fff;border:1px solid #86efac;border-radius:8px}
+.sim2d-installed-cpu img{width:46px;height:46px;object-fit:contain;background:#eef6f5;border-radius:6px}
+.sim2d-installed-cpu p{margin:2px 0 0;font-size:11px;line-height:1.2;color:var(--muted)}
+.sim2d-installed-cpu strong{font-size:12px}
