@@ -1,6 +1,13 @@
 const fs=require("fs");
 const path=require("path");
 const {products}=require("../../database/seed-products");
+const {validateCatalog}=require("../services/productSpecService");
+
+const catalogValidation=validateCatalog(products);
+if(!catalogValidation.valid){
+  const detail=catalogValidation.invalid.map(i=>`#${i.id} ${i.name}: ${i.errors.join(", ")}`).join("\n");
+  throw new Error(`Product seed technical data is invalid:\n${detail}`);
+}
 
 const dataDir=path.join(__dirname,"..","..","data");
 const dataFile=path.join(dataDir,"store.json");
