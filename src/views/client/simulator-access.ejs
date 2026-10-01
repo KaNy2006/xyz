@@ -63,10 +63,35 @@
   <% }) %>
 </div>
 
-<% if(selectedCount===8){ %>
+<section class="section-head">
+  <h2>Kiểm tra tương thích</h2>
+</section>
+
+<% if(selectedCount<2){ %>
+<section class="analysis-card">
+  <h3>Đang chờ thêm linh kiện</h3>
+  <p>Hãy chọn thêm linh kiện để hệ thống có đủ dữ liệu kiểm tra tương thích.</p>
+</section>
+<% }else{ %>
+<section class="analysis-card">
+  <h3><%= compatibility.valid?'✓ Cấu hình chưa phát hiện lỗi tương thích':'✕ Phát hiện lỗi tương thích' %></h3>
+  <% compatibility.issues.forEach(issue=>{ %>
+    <p class="<%= issue.level==='error'?'text-danger':'text-success' %>">
+      <strong><%= issue.code %></strong> · <%= issue.message %>
+    </p>
+  <% }) %>
+</section>
+<% } %>
+
+<% if(selectedCount===8&&compatibility.valid){ %>
 <section class="builder-ready">
-  <h2>Đã chọn đủ 8 linh kiện</h2>
-  <p>Cấu hình đã sẵn sàng cho bước kiểm tra tương thích ở scope tiếp theo.</p>
+  <h2>Cấu hình đủ 8 linh kiện và tương thích</h2>
+  <p>Cấu hình đã sẵn sàng cho bước mô phỏng lắp ráp 2D.</p>
+</section>
+<% }else if(selectedCount===8&&!compatibility.valid){ %>
+<section class="analysis-card">
+  <h2 class="text-danger">Cấu hình chưa thể lắp ráp</h2>
+  <p>Hãy thay các linh kiện đang xung đột trước khi chuyển sang bước mô phỏng lắp ráp.</p>
 </section>
 <% } %>
 <% } %>
