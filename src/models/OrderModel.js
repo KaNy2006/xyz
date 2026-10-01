@@ -13,7 +13,8 @@ async function create({user,cart}){
   db.save(data);return id;
 }
 async function updateStatus(id,status){const data=db.read(),o=data.orders.find(x=>x.id===Number(id));if(o){o.status=status;db.save(data);}return o||null;}
-async function hasCompletedOrder(userId){return db.read().orders.some(o=>o.user_id===Number(userId)&&o.status==="Hoàn tất");}\nasync function getRevenueSummary(){
+async function hasCompletedOrder(userId){return db.read().orders.some(o=>o.user_id===Number(userId)&&o.status==="Hoàn tất");}
+async function getRevenueSummary(){
   const orders=db.read().orders,active=orders.filter(o=>o.status!=="Đã hủy");
   return{revenue:active.reduce((s,o)=>s+Number(o.total),0),orders:orders.length,pending:orders.filter(o=>o.status==="Chờ duyệt").length};
 }
