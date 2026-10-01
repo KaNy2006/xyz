@@ -183,6 +183,17 @@
                   </div>
                 </article>
               </div>
+              <div class="sim2d-cooler-zone" id="coolerZone">
+                <span>Vị trí Cooler</span>
+                <button class="btn primary sim2d-cooler-btn" type="button" id="installCoolerBtn" hidden>Lắp Cooler</button>
+                <article class="sim2d-installed-cooler" id="installedCooler" hidden>
+                  <img src="<%= parts.Cooler.image %>" alt="<%= parts.Cooler.name %>">
+                  <div>
+                    <strong>Cooler đã lắp</strong>
+                    <p><%= parts.Cooler.name %></p>
+                  </div>
+                </article>
+              </div>
             </article>
           </div>
           <div class="sim2d-psu-zone">
