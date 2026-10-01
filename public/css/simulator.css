@@ -116,3 +116,16 @@
 .sim2d-progress-item[aria-current="step"] small{font-weight:900}
 .sim2d-progress-item.is-done small::after{content:" ✓";color:#065f46}
 @media(max-width:560px){.sim2d-toolbar-actions{width:100%}.sim2d-toolbar-actions .btn{flex:1}}
+
+.sim-analysis{margin-top:20px;padding-top:18px;border-top:1px solid #bbf7d0}
+.sim-analysis-head h2,.sim-analysis-head p{margin:0}.sim-analysis-head>div>p:last-child{margin-top:5px;color:#475569}
+.sim-analysis-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+.sim-analysis-card{padding:16px;background:#fff;border:1px solid #bbf7d0;border-radius:10px}
+.sim-analysis-label{display:block;margin-bottom:5px;color:var(--muted);font-size:12px;font-weight:900;text-transform:uppercase}
+.sim-analysis-value{display:block;margin-bottom:10px;color:var(--primary-dark);font-size:28px;line-height:1}
+.sim-analysis-card p{margin:6px 0 0;font-size:13px}
+.sim-bottleneck-list{display:grid;gap:10px;margin-top:12px}
+.sim-bottleneck-item{padding:12px 14px;background:#fff;border:1px solid var(--line);border-left-width:4px;border-radius:9px}
+.sim-bottleneck-item p{margin:4px 0 0;color:#475569;font-size:13px}
+.sim-bottleneck-item.level-good{border-left-color:#10b981}.sim-bottleneck-item.level-light{border-left-color:#84cc16}.sim-bottleneck-item.level-medium{border-left-color:#f59e0b}.sim-bottleneck-item.level-high{border-left-color:#dc2626}
+@media(max-width:820px){.sim-analysis-grid{grid-template-columns:1fr}}
