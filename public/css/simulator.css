@@ -96,3 +96,14 @@
 .sim2d-installed-gpu img{width:40px;height:40px;object-fit:contain;background:#eef6f5;border-radius:5px}
 .sim2d-installed-gpu p{margin:2px 0 0;font-size:9px;line-height:1.15;color:var(--muted)}
 .sim2d-installed-gpu strong{font-size:10px}
+
+.sim2d-complete{margin:0 20px 22px;padding:20px;border:1px solid #86efac;border-radius:12px;background:#f0fdf4}
+.sim2d-complete-head{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:16px}
+.sim2d-complete-head h2,.sim2d-complete-head p{margin:0}.sim2d-complete-head>div>p:last-child{margin-top:5px;color:#475569}
+.sim2d-complete-badge{padding:8px 12px;border-radius:999px;background:#d1fae5;color:#065f46;font-weight:900;white-space:nowrap}
+.sim2d-complete-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.sim2d-complete-item{display:grid;grid-template-columns:48px 1fr;gap:10px;align-items:center;padding:10px;background:#fff;border:1px solid #bbf7d0;border-radius:9px}
+.sim2d-complete-item img{width:48px;height:48px;object-fit:contain;background:#eef6f5;border-radius:7px}
+.sim2d-complete-item p{margin:2px 0 0;font-size:12px;line-height:1.25;color:var(--muted)}
+.sim2d-complete-actions{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid #bbf7d0}
+@media(max-width:560px){.sim2d-complete-head{align-items:flex-start;flex-direction:column}.sim2d-complete{margin:0 10px 16px}}
