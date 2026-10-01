@@ -48,6 +48,8 @@
   const restartBtn=document.getElementById("restartAssemblyBtn");
   const simulatorForm=document.getElementById("simulatorForm");
   const progressItems=[...document.querySelectorAll(".sim2d-progress-item")];
+  const swapButtons=[...document.querySelectorAll(".sim-swap-btn")];
+  const recalculateBtn=document.getElementById("recalculateConfigBtn");
 
   function setConfigLocked(locked){
     if(!simulatorForm)return;
@@ -72,6 +74,23 @@
 
   restartBtn?.addEventListener("click",()=>{
     window.location.reload();
+  });
+
+  swapButtons.forEach(button=>{
+    button.addEventListener("click",()=>{
+      const field=button.dataset.swapField;
+      const slot=button.dataset.swapSlot;
+      const select=simulatorForm?.querySelector(`select[name="${field}"]`);
+      setConfigLocked(false);
+      if(recalculateBtn)recalculateBtn.textContent="Tính lại cấu hình";
+      if(restartBtn)restartBtn.hidden=true;
+      status.textContent=`Đang thay ${slot}`;
+      status.classList.remove("is-done","is-active");
+      current.textContent=`Chọn ${slot} mới ở form cấu hình`;
+      hint.innerHTML=`Chọn <strong>${slot}</strong> mới, sau đó bấm <strong>Tính lại cấu hình</strong>. Các linh kiện còn lại sẽ được giữ nguyên.`;
+      simulatorForm?.scrollIntoView({behavior:"smooth",block:"start"});
+      window.setTimeout(()=>select?.focus(),350);
+    });
   });
 
   startBtn.addEventListener("click",()=>{
