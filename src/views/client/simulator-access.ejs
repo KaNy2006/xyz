@@ -261,8 +261,51 @@
     <div class="sim2d-complete-actions">
       <span>Compatibility: <strong class="text-success">Đạt</strong></span>
       <span>Trạng thái lắp ráp: <strong class="text-success">Hoàn tất</strong></span>
-      <button class="btn" type="button" disabled>Phân tích cấu hình ở scope tiếp theo</button>
+      <span>Workload: <strong>Gaming 1440p</strong></span>
     </div>
+
+    <section class="sim-analysis">
+      <div class="sim-analysis-head">
+        <div>
+          <p class="sim2d-kicker">CONFIG ANALYSIS</p>
+          <h2>Phân tích cấu hình sau lắp ráp</h2>
+          <p>Các chỉ số là ước tính nội bộ của mô hình mô phỏng, dùng để so sánh cấu hình trong project.</p>
+        </div>
+      </div>
+
+      <div class="sim-analysis-grid">
+        <article class="sim-analysis-card">
+          <span class="sim-analysis-label">Công suất ước tính</span>
+          <strong class="sim-analysis-value"><%= power.estimated %>W</strong>
+          <p>PSU đang chọn: <strong><%= power.psu %>W</strong></p>
+          <p>Khuyến nghị: <strong><%= power.recommended %>W+</strong></p>
+          <p class="<%= power.status==='good'?'text-success':'text-danger' %>"><%= power.message %></p>
+        </article>
+
+        <article class="sim-analysis-card">
+          <span class="sim-analysis-label">Gaming 1440p</span>
+          <strong class="sim-analysis-value"><%= performance.overall %>/100</strong>
+          <p>CPU <strong><%= performance.cpu %></strong> · GPU <strong><%= performance.gpu %></strong></p>
+          <p>RAM <strong><%= performance.ram %></strong> · SSD <strong><%= performance.ssd %></strong></p>
+          <p>Điểm tổng hợp theo trọng số Gaming 1440p.</p>
+        </article>
+
+        <article class="sim-analysis-card">
+          <span class="sim-analysis-label">Bottleneck</span>
+          <strong class="sim-analysis-value"><%= bottleneck.hasProblem?'Cần chú ý':'Cân bằng' %></strong>
+          <p><%= bottleneck.hasProblem?'Có thành phần chênh lệch đáng kể.':'CPU/GPU/RAM chưa phát hiện nút thắt đáng kể.' %></p>
+        </article>
+      </div>
+
+      <div class="sim-bottleneck-list">
+        <% bottleneck.results.forEach(result=>{ %>
+          <article class="sim-bottleneck-item level-<%= result.level %>">
+            <strong><%= result.target %> · <%= result.level.toUpperCase() %></strong>
+            <p><%= result.message %></p>
+          </article>
+        <% }) %>
+      </div>
+    </section>
   </section>
 </section>
 <script src="/js/simulator-assembly.js"></script>
