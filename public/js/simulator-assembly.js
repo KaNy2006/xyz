@@ -41,6 +41,9 @@
   const installedPsu=document.getElementById("installedPsu");
   const gpuStep=document.querySelector('.sim2d-progress-item[data-step-index="7"]');
   const gpuPart=document.querySelector('.sim2d-part[data-part="GPU"]');
+  const gpuBtn=document.getElementById("installGpuBtn");
+  const gpuZone=document.getElementById("gpuZone");
+  const installedGpu=document.getElementById("installedGpu");
 
   if(!startBtn||!installBtn||!zone||!status||!current||!hint)return;
 
@@ -194,10 +197,27 @@
     psuPart?.classList.remove("is-active");
     gpuStep?.classList.add("is-active");
     gpuPart?.classList.add("is-active");
-    status.textContent="Bước 7 hoàn tất";
+    gpuZone?.classList.add("is-active");
+    if(gpuBtn)gpuBtn.hidden=false;
+    status.textContent="Đang lắp GPU";
+    status.classList.remove("is-done");
+    status.classList.add("is-active");
+    current.textContent="Bước hiện tại: Lắp GPU";
+    hint.innerHTML='PSU đã hoàn tất. Đưa <strong>GPU</strong> vào khe PCIe và bấm <strong>Lắp GPU</strong>.';
+  });
+
+  gpuBtn?.addEventListener("click",()=>{
+    gpuBtn.hidden=true;
+    if(installedGpu)installedGpu.hidden=false;
+    gpuZone?.classList.remove("is-active");
+    gpuZone?.classList.add("is-done");
+    gpuStep?.classList.remove("is-active");
+    gpuStep?.classList.add("is-done");
+    gpuPart?.classList.remove("is-active");
+    status.textContent="Đã lắp đủ 8 linh kiện";
     status.classList.remove("is-active");
     status.classList.add("is-done");
-    current.textContent="Bước hiện tại: PSU đã lắp";
-    hint.innerHTML='PSU đã được cố định trong Case. Bước tiếp theo là <strong>lắp GPU</strong>.';
+    current.textContent="Bước hiện tại: Hoàn tất lắp ráp linh kiện";
+    hint.innerHTML='GPU đã được lắp. Toàn bộ <strong>8 linh kiện</strong> đã hoàn tất; bước tiếp theo là màn tổng kết S7.10.';
   });
 })();
