@@ -19,6 +19,11 @@
   const installedRam=document.getElementById("installedRam");
   const ramStep=document.querySelector('.sim2d-progress-item[data-step-index="2"]');
   const ramPart=document.querySelector('.sim2d-part[data-part="RAM"]');
+  const ssdBtn=document.getElementById("installSsdBtn");
+  const ssdZone=document.getElementById("ssdZone");
+  const installedSsd=document.getElementById("installedSsd");
+  const ssdStep=document.querySelector('.sim2d-progress-item[data-step-index="3"]');
+  const ssdPart=document.querySelector('.sim2d-part[data-part="SSD"]');
 
   if(!startBtn||!installBtn||!zone||!status||!current||!hint)return;
 
@@ -91,7 +96,29 @@
     status.textContent="Bước 3 hoàn tất";
     status.classList.remove("is-active");
     status.classList.add("is-done");
-    current.textContent="Bước hiện tại: RAM đã lắp";
-    hint.innerHTML='RAM đã được gắn vào khe nhớ. Bước tiếp theo sẽ là <strong>lắp SSD</strong> ở S7.5.';
+    if(ssdBtn)ssdBtn.hidden=false;
+    ssdZone?.classList.add("is-active");
+    ssdStep?.classList.add("is-active");
+    ssdPart?.classList.add("is-active");
+    status.textContent="Đang lắp SSD";
+    status.classList.remove("is-done");
+    status.classList.add("is-active");
+    current.textContent="Bước hiện tại: Lắp SSD";
+    hint.innerHTML='RAM đã hoàn tất. Đưa <strong>SSD</strong> vào đúng khe M.2 / vị trí lưu trữ rồi bấm <strong>Lắp SSD</strong>.';
+  });
+
+  ssdBtn?.addEventListener("click",()=>{
+    ssdBtn.hidden=true;
+    if(installedSsd)installedSsd.hidden=false;
+    ssdZone?.classList.remove("is-active");
+    ssdZone?.classList.add("is-done");
+    ssdStep?.classList.remove("is-active");
+    ssdStep?.classList.add("is-done");
+    ssdPart?.classList.remove("is-active");
+    status.textContent="Bước 4 hoàn tất";
+    status.classList.remove("is-active");
+    status.classList.add("is-done");
+    current.textContent="Bước hiện tại: SSD đã lắp";
+    hint.innerHTML='SSD đã được lắp vào vị trí lưu trữ. Bước tiếp theo sẽ là <strong>lắp Cooler</strong> ở S7.6.';
   });
 })();
