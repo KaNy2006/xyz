@@ -1,21 +1,74 @@
 <%- include('../partials/header') %>
 <section class="page-title">
   <h1>PC Simulator</h1>
-  <p>Khu vực mô phỏng được mở khóa sau khi tài khoản hoàn thành ít nhất một đơn hàng.</p>
+  <p>Phòng mô phỏng PC dành cho tài khoản đã hoàn thành ít nhất một đơn hàng.</p>
 </section>
 
-<% if(unlocked){ %>
-<section class="builder-ready">
-  <h2>Simulator đã được mở khóa</h2>
-  <p>Tài khoản của bạn đã có ít nhất một đơn hàng Hoàn tất. Từ đây bạn có quyền sử dụng khu vực mô phỏng PC.</p>
-  <p>Ở bước tiếp theo, Simulator sẽ cho phép tự do chọn và thay đổi linh kiện mà không phụ thuộc sản phẩm đã mua.</p>
-</section>
-<% }else{ %>
+<% if(!unlocked){ %>
 <section class="analysis-card">
   <h2>Simulator đang bị khóa</h2>
   <p>Bạn chỉ cần hoàn thành ít nhất <strong>1 đơn hàng bất kỳ</strong> để mở khóa chức năng này.</p>
   <p>Không cần mua đủ 8 linh kiện và không cần mua một bộ PC hoàn chỉnh.</p>
   <a class="btn primary" href="/products">Xem sản phẩm</a>
 </section>
+<% }else{ %>
+<section class="builder-ready">
+  <h2>Simulator đã được mở khóa</h2>
+  <p>Bạn có thể tự do thử mọi linh kiện trong catalogue, không phụ thuộc vào sản phẩm đã mua.</p>
+</section>
+
+<form class="builder-panel builder-grid" action="/simulator" method="get" id="simulatorForm">
+  <% slots.forEach(slot=>{ const key=fields[slot]; %>
+    <label>
+      <%= slot %>
+      <select name="<%= key %>">
+        <option value="">Chọn <%= slot %></option>
+        <% products.filter(p=>p.category===slot).forEach(p=>{ %>
+          <option value="<%= p.id %>" <%= selected[key]===p.id?'selected':'' %>>
+            <%= p.name %>
+          </option>
+        <% }) %>
+      </select>
+    </label>
+  <% }) %>
+  <button class="btn primary" type="submit">Cập nhật cấu hình</button>
+  <a class="btn" href="/simulator">Đặt lại</a>
+</form>
+
+<div class="builder-summary">
+  <div><strong>Đã chọn:</strong> <%= selectedCount %>/8 linh kiện</div>
+  <div><strong>Trạng thái:</strong> <%= selectedCount===8?'Đã đủ cấu hình':'Đang chọn linh kiện' %></div>
+</div>
+
+<section class="section-head">
+  <h2>Cấu hình đang mô phỏng</h2>
+</section>
+
+<div class="product-grid">
+  <% slots.forEach(slot=>{ const p=parts[slot]; %>
+    <article class="product-card">
+      <% if(p){ %>
+        <img src="<%= p.image %>" alt="<%= p.name %>">
+        <p class="category"><%= slot %> · <%= p.brand %></p>
+        <h3><%= p.name %></h3>
+        <p>Hiệu năng: <strong><%= p.performance %>/100</strong></p>
+        <p class="price"><%= p.price.toLocaleString('vi-VN') %>đ</p>
+      <% }else{ %>
+        <img src="/uploads/<%= slot.toLowerCase() %>.svg" alt="<%= slot %>">
+        <p class="category"><%= slot %></p>
+        <h3>Chưa chọn <%= slot %></h3>
+        <p>Chọn linh kiện ở phía trên để đưa vào cấu hình mô phỏng.</p>
+      <% } %>
+    </article>
+  <% }) %>
+</div>
+
+<% if(selectedCount===8){ %>
+<section class="builder-ready">
+  <h2>Đã chọn đủ 8 linh kiện</h2>
+  <p>Cấu hình đã sẵn sàng cho bước kiểm tra tương thích ở scope tiếp theo.</p>
+</section>
 <% } %>
+<% } %>
+
 <%- include('../partials/footer') %>
