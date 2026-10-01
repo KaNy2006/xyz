@@ -24,7 +24,7 @@ function ensure(){
   if(!fs.existsSync(dataDir))fs.mkdirSync(dataDir,{recursive:true});
   if(!fs.existsSync(dataFile)){
     fs.writeFileSync(dataFile,JSON.stringify(defaultData(),null,2),"utf8");
-    console.log("✓ Local database initialized with 80 products.");
+    console.log(`✓ Local database initialized with ${products.length} products.`);
   }
 }
 
