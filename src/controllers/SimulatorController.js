@@ -1,5 +1,6 @@
 const OrderModel=require("../models/OrderModel");
 const ProductModel=require("../models/ProductModel");
+const CompatibilityService=require("../services/compatibilityService");
 
 const slots=["CPU","Mainboard","RAM","GPU","SSD","PSU","Case","Cooler"];
 const fields={
@@ -39,7 +40,8 @@ async function index(req,res){
       products:[],
       selected:{},
       parts:{},
-      selectedCount:0
+      selectedCount:0,
+      compatibility:null
     });
   }
 
@@ -47,6 +49,7 @@ async function index(req,res){
   const selected=readSelected(req.query);
   const parts=await resolveSelectedParts(selected);
   const selectedCount=Object.values(parts).filter(Boolean).length;
+  const compatibility=CompatibilityService.analyze(parts);
 
   res.render("client/simulator-access",{
     title:"PC Simulator",
@@ -56,7 +59,8 @@ async function index(req,res){
     products,
     selected,
     parts,
-    selectedCount
+    selectedCount,
+    compatibility
   });
 }
 
