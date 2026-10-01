@@ -232,6 +232,35 @@
       </div>
     </section>
   </div>
+
+  <section class="sim2d-complete" id="assemblyCompletePanel" hidden>
+    <div class="sim2d-complete-head">
+      <div>
+        <p class="sim2d-kicker">ASSEMBLY COMPLETE</p>
+        <h2>Hoàn tất lắp ráp 2D</h2>
+        <p>Bạn đã hoàn thành đủ 8/8 bước lắp ráp cho cấu hình đang mô phỏng.</p>
+      </div>
+      <span class="sim2d-complete-badge">8/8 hoàn tất</span>
+    </div>
+
+    <div class="sim2d-complete-grid">
+      <% assemblySteps.forEach(slot=>{ const p=parts[slot]; %>
+        <article class="sim2d-complete-item">
+          <img src="<%= p.image %>" alt="<%= p.name %>">
+          <div>
+            <strong><%= slot %></strong>
+            <p><%= p.name %></p>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+
+    <div class="sim2d-complete-actions">
+      <span>Compatibility: <strong class="text-success">Đạt</strong></span>
+      <span>Trạng thái lắp ráp: <strong class="text-success">Hoàn tất</strong></span>
+      <button class="btn" type="button" disabled>Phân tích cấu hình ở scope tiếp theo</button>
+    </div>
+  </section>
 </section>
 <script src="/js/simulator-assembly.js"></script>
 <% }else if(selectedCount===8&&!compatibility.valid){ %>
