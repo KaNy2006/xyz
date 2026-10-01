@@ -14,6 +14,11 @@
   const installedCpu=document.getElementById("installedCpu");
   const cpuStep=document.querySelector('.sim2d-progress-item[data-step-index="1"]');
   const cpuPart=document.querySelector('.sim2d-part[data-part="CPU"]');
+  const ramBtn=document.getElementById("installRamBtn");
+  const ramZone=document.getElementById("ramZone");
+  const installedRam=document.getElementById("installedRam");
+  const ramStep=document.querySelector('.sim2d-progress-item[data-step-index="2"]');
+  const ramPart=document.querySelector('.sim2d-part[data-part="RAM"]');
 
   if(!startBtn||!installBtn||!zone||!status||!current||!hint)return;
 
@@ -64,7 +69,29 @@
     status.textContent="Bước 2 hoàn tất";
     status.classList.remove("is-active");
     status.classList.add("is-done");
-    current.textContent="Bước hiện tại: CPU đã lắp";
-    hint.innerHTML='CPU đã được đặt đúng socket. Bước tiếp theo sẽ là <strong>lắp RAM</strong> ở S7.4.';
+    if(ramBtn)ramBtn.hidden=false;
+    ramZone?.classList.add("is-active");
+    ramStep?.classList.add("is-active");
+    ramPart?.classList.add("is-active");
+    status.textContent="Đang lắp RAM";
+    status.classList.remove("is-done");
+    status.classList.add("is-active");
+    current.textContent="Bước hiện tại: Lắp RAM";
+    hint.innerHTML='CPU đã cố định. Căn đúng khe <strong>RAM</strong> trên Mainboard rồi bấm <strong>Lắp RAM</strong>.';
+  });
+
+  ramBtn?.addEventListener("click",()=>{
+    ramBtn.hidden=true;
+    if(installedRam)installedRam.hidden=false;
+    ramZone?.classList.remove("is-active");
+    ramZone?.classList.add("is-done");
+    ramStep?.classList.remove("is-active");
+    ramStep?.classList.add("is-done");
+    ramPart?.classList.remove("is-active");
+    status.textContent="Bước 3 hoàn tất";
+    status.classList.remove("is-active");
+    status.classList.add("is-done");
+    current.textContent="Bước hiện tại: RAM đã lắp";
+    hint.innerHTML='RAM đã được gắn vào khe nhớ. Bước tiếp theo sẽ là <strong>lắp SSD</strong> ở S7.5.';
   });
 })();
