@@ -44,6 +44,7 @@
   const gpuBtn=document.getElementById("installGpuBtn");
   const gpuZone=document.getElementById("gpuZone");
   const installedGpu=document.getElementById("installedGpu");
+  const completePanel=document.getElementById("assemblyCompletePanel");
 
   if(!startBtn||!installBtn||!zone||!status||!current||!hint)return;
 
@@ -217,7 +218,11 @@
     status.textContent="Đã lắp đủ 8 linh kiện";
     status.classList.remove("is-active");
     status.classList.add("is-done");
-    current.textContent="Bước hiện tại: Hoàn tất lắp ráp linh kiện";
-    hint.innerHTML='GPU đã được lắp. Toàn bộ <strong>8 linh kiện</strong> đã hoàn tất; bước tiếp theo là màn tổng kết S7.10.';
+    current.textContent="Bước hiện tại: Hoàn tất lắp ráp";
+    hint.innerHTML='GPU đã được lắp. Toàn bộ <strong>8 linh kiện</strong> đã hoàn tất.';
+    if(completePanel){
+      completePanel.hidden=false;
+      completePanel.scrollIntoView({behavior:"smooth",block:"start"});
+    }
   });
 })();
