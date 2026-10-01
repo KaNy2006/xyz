@@ -1,0 +1,21 @@
+<%- include('../partials/header') %>
+<section class="page-title">
+  <h1>PC Simulator</h1>
+  <p>Khu vực mô phỏng được mở khóa sau khi tài khoản hoàn thành ít nhất một đơn hàng.</p>
+</section>
+
+<% if(unlocked){ %>
+<section class="builder-ready">
+  <h2>Simulator đã được mở khóa</h2>
+  <p>Tài khoản của bạn đã có ít nhất một đơn hàng Hoàn tất. Từ đây bạn có quyền sử dụng khu vực mô phỏng PC.</p>
+  <p>Ở bước tiếp theo, Simulator sẽ cho phép tự do chọn và thay đổi linh kiện mà không phụ thuộc sản phẩm đã mua.</p>
+</section>
+<% }else{ %>
+<section class="analysis-card">
+  <h2>Simulator đang bị khóa</h2>
+  <p>Bạn chỉ cần hoàn thành ít nhất <strong>1 đơn hàng bất kỳ</strong> để mở khóa chức năng này.</p>
+  <p>Không cần mua đủ 8 linh kiện và không cần mua một bộ PC hoàn chỉnh.</p>
+  <a class="btn primary" href="/products">Xem sản phẩm</a>
+</section>
+<% } %>
+<%- include('../partials/footer') %>
