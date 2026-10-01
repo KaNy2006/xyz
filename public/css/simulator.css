@@ -107,3 +107,12 @@
 .sim2d-complete-item p{margin:2px 0 0;font-size:12px;line-height:1.25;color:var(--muted)}
 .sim2d-complete-actions{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid #bbf7d0}
 @media(max-width:560px){.sim2d-complete-head{align-items:flex-start;flex-direction:column}.sim2d-complete{margin:0 10px 16px}}
+
+.sim2d-toolbar-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#simulatorForm.is-locked{position:relative;opacity:.72}
+#simulatorForm.is-locked::after{content:"Đang lắp ráp - làm lại quy trình để thay cấu hình";position:absolute;inset:0;display:grid;place-items:center;padding:12px;border-radius:10px;background:rgba(255,255,255,.78);color:#475569;font-weight:800;text-align:center;pointer-events:none}
+.sim2d-part.is-done{border-color:#86efac;background:#f0fdf4}
+.sim2d-part.is-done::after{content:"✓";margin-left:auto;color:#065f46;font-weight:900}
+.sim2d-progress-item[aria-current="step"] small{font-weight:900}
+.sim2d-progress-item.is-done small::after{content:" ✓";color:#065f46}
+@media(max-width:560px){.sim2d-toolbar-actions{width:100%}.sim2d-toolbar-actions .btn{flex:1}}
