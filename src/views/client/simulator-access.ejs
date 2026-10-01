@@ -32,7 +32,7 @@
       </select>
     </label>
   <% }) %>
-  <button class="btn primary" type="submit">Cập nhật cấu hình</button>
+  <button class="btn primary" type="submit" id="recalculateConfigBtn">Cập nhật cấu hình</button>
   <a class="btn" href="/simulator">Đặt lại</a>
 </form>
 
@@ -250,10 +250,11 @@
       <% assemblySteps.forEach(slot=>{ const p=parts[slot]; %>
         <article class="sim2d-complete-item">
           <img src="<%= p.image %>" alt="<%= p.name %>">
-          <div>
+          <div class="sim2d-complete-item-info">
             <strong><%= slot %></strong>
             <p><%= p.name %></p>
           </div>
+          <button class="btn sim-swap-btn" type="button" data-swap-field="<%= fields[slot] %>" data-swap-slot="<%= slot %>">Thay</button>
         </article>
       <% }) %>
     </div>
@@ -262,6 +263,7 @@
       <span>Compatibility: <strong class="text-success">Đạt</strong></span>
       <span>Trạng thái lắp ráp: <strong class="text-success">Hoàn tất</strong></span>
       <span>Workload: <strong>Gaming 1440p</strong></span>
+      <span class="sim-recalc-note">Thay linh kiện rồi bấm <strong>Cập nhật cấu hình</strong> để tính lại.</span>
     </div>
 
     <section class="sim-analysis">
