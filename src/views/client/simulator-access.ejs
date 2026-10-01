@@ -161,6 +161,17 @@
                   </div>
                 </article>
               </div>
+              <div class="sim2d-ram-zone" id="ramZone">
+                <span>Khe RAM</span>
+                <button class="btn primary sim2d-ram-btn" type="button" id="installRamBtn" hidden>Lắp RAM</button>
+                <article class="sim2d-installed-ram" id="installedRam" hidden>
+                  <img src="<%= parts.RAM.image %>" alt="<%= parts.RAM.name %>">
+                  <div>
+                    <strong>RAM đã lắp</strong>
+                    <p><%= parts.RAM.name %></p>
+                  </div>
+                </article>
+              </div>
             </article>
           </div>
           <div class="sim2d-psu-zone">
