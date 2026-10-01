@@ -45,11 +45,39 @@
   const gpuZone=document.getElementById("gpuZone");
   const installedGpu=document.getElementById("installedGpu");
   const completePanel=document.getElementById("assemblyCompletePanel");
+  const restartBtn=document.getElementById("restartAssemblyBtn");
+  const simulatorForm=document.getElementById("simulatorForm");
+  const progressItems=[...document.querySelectorAll(".sim2d-progress-item")];
+
+  function setConfigLocked(locked){
+    if(!simulatorForm)return;
+    simulatorForm.classList.toggle("is-locked",locked);
+    simulatorForm.querySelectorAll("select,button[type='submit']").forEach(el=>{
+      el.disabled=locked;
+    });
+  }
+
+  function syncProgressAccessibility(){
+    progressItems.forEach(item=>{
+      item.setAttribute("aria-current",item.classList.contains("is-active")?"step":"false");
+    });
+  }
+
+  progressItems.forEach(item=>{
+    new MutationObserver(syncProgressAccessibility).observe(item,{attributes:true,attributeFilter:["class"]});
+  });
+  syncProgressAccessibility();
 
   if(!startBtn||!installBtn||!zone||!status||!current||!hint)return;
 
+  restartBtn?.addEventListener("click",()=>{
+    window.location.reload();
+  });
+
   startBtn.addEventListener("click",()=>{
     startBtn.disabled=true;
+    if(restartBtn)restartBtn.hidden=false;
+    setConfigLocked(true);
     installBtn.hidden=false;
     zone.classList.add("is-active");
     step?.classList.add("is-active");
@@ -69,6 +97,7 @@
     step?.classList.remove("is-active");
     step?.classList.add("is-done");
     part?.classList.remove("is-active");
+    part?.classList.add("is-done");
     status.textContent="Bước 1 hoàn tất";
     status.classList.remove("is-active");
     status.classList.add("is-done");
@@ -92,6 +121,7 @@
     cpuStep?.classList.remove("is-active");
     cpuStep?.classList.add("is-done");
     cpuPart?.classList.remove("is-active");
+    cpuPart?.classList.add("is-done");
     status.textContent="Bước 2 hoàn tất";
     status.classList.remove("is-active");
     status.classList.add("is-done");
@@ -114,6 +144,7 @@
     ramStep?.classList.remove("is-active");
     ramStep?.classList.add("is-done");
     ramPart?.classList.remove("is-active");
+    ramPart?.classList.add("is-done");
     status.textContent="Bước 3 hoàn tất";
     status.classList.remove("is-active");
     status.classList.add("is-done");
@@ -136,6 +167,7 @@
     ssdStep?.classList.remove("is-active");
     ssdStep?.classList.add("is-done");
     ssdPart?.classList.remove("is-active");
+    ssdPart?.classList.add("is-done");
     status.textContent="Bước 4 hoàn tất";
     status.classList.remove("is-active");
     status.classList.add("is-done");
@@ -158,6 +190,7 @@
     coolerStep?.classList.remove("is-active");
     coolerStep?.classList.add("is-done");
     coolerPart?.classList.remove("is-active");
+    coolerPart?.classList.add("is-done");
     caseStep?.classList.add("is-active");
     casePart?.classList.add("is-active");
     caseFrame?.classList.add("is-active");
@@ -177,6 +210,7 @@
     caseStep?.classList.remove("is-active");
     caseStep?.classList.add("is-done");
     casePart?.classList.remove("is-active");
+    casePart?.classList.add("is-done");
     psuStep?.classList.add("is-active");
     psuPart?.classList.add("is-active");
     psuZone?.classList.add("is-active");
@@ -196,6 +230,7 @@
     psuStep?.classList.remove("is-active");
     psuStep?.classList.add("is-done");
     psuPart?.classList.remove("is-active");
+    psuPart?.classList.add("is-done");
     gpuStep?.classList.add("is-active");
     gpuPart?.classList.add("is-active");
     gpuZone?.classList.add("is-active");
@@ -215,6 +250,7 @@
     gpuStep?.classList.remove("is-active");
     gpuStep?.classList.add("is-done");
     gpuPart?.classList.remove("is-active");
+    gpuPart?.classList.add("is-done");
     status.textContent="Đã lắp đủ 8 linh kiện";
     status.classList.remove("is-active");
     status.classList.add("is-done");
