@@ -1,4 +1,5 @@
 <%- include('../partials/header') %>
+<link rel="stylesheet" href="/css/simulator.css">
 <section class="page-title">
   <h1>PC Simulator</h1>
   <p>Phòng mô phỏng PC dành cho tài khoản đã hoàn thành ít nhất một đơn hàng.</p>
@@ -87,6 +88,74 @@
 <section class="builder-ready">
   <h2>Cấu hình đủ 8 linh kiện và tương thích</h2>
   <p>Cấu hình đã sẵn sàng cho bước mô phỏng lắp ráp 2D.</p>
+</section>
+
+<section class="sim2d-shell">
+  <div class="sim2d-toolbar">
+    <div>
+      <p class="sim2d-kicker">PC ASSEMBLY LAB</p>
+      <h2>Phòng lắp ráp 2D</h2>
+      <p>Khung mô phỏng cơ bản. Các thao tác lắp từng linh kiện sẽ được bổ sung ở các bước tiếp theo.</p>
+    </div>
+    <button class="btn primary" type="button" disabled>Bắt đầu lắp ráp</button>
+  </div>
+
+  <div class="sim2d-progress" aria-label="Tiến trình lắp ráp">
+    <% const assemblySteps=['Mainboard','CPU','RAM','SSD','Cooler','Case','PSU','GPU']; %>
+    <% assemblySteps.forEach((step,i)=>{ %>
+      <div class="sim2d-progress-item">
+        <span><%= i+1 %></span>
+        <small><%= step %></small>
+      </div>
+    <% }) %>
+  </div>
+
+  <div class="sim2d-layout">
+    <aside class="sim2d-parts">
+      <h3>Linh kiện đã chọn</h3>
+      <div class="sim2d-parts-list">
+        <% assemblySteps.forEach(slot=>{ const p=parts[slot]; %>
+          <article class="sim2d-part">
+            <img src="<%= p.image %>" alt="<%= p.name %>">
+            <div>
+              <strong><%= slot %></strong>
+              <p><%= p.name %></p>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    </aside>
+
+    <section class="sim2d-workbench">
+      <div class="sim2d-workbench-head">
+        <div>
+          <strong>Khu vực thao tác</strong>
+          <p>Bước hiện tại: Chuẩn bị lắp Mainboard</p>
+        </div>
+        <span class="sim2d-status">Chưa bắt đầu</span>
+      </div>
+
+      <div class="sim2d-case">
+        <div class="sim2d-case-frame">
+          <span class="sim2d-case-label">CASE</span>
+          <div class="sim2d-board-zone">
+            <span>Vị trí Mainboard</span>
+          </div>
+          <div class="sim2d-psu-zone">
+            <span>PSU</span>
+          </div>
+          <div class="sim2d-gpu-zone">
+            <span>GPU</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sim2d-hint">
+        <strong>Hướng dẫn</strong>
+        <p>S7.1 mới dựng khung mô phỏng. Từ S7.2, linh kiện sẽ được đưa vào khu vực này theo từng bước.</p>
+      </div>
+    </section>
+  </div>
 </section>
 <% }else if(selectedCount===8&&!compatibility.valid){ %>
 <section class="analysis-card">
