@@ -31,6 +31,11 @@
   const coolerPart=document.querySelector('.sim2d-part[data-part="Cooler"]');
   const caseStep=document.querySelector('.sim2d-progress-item[data-step-index="5"]');
   const casePart=document.querySelector('.sim2d-part[data-part="Case"]');
+  const caseBtn=document.getElementById("installCaseBtn");
+  const caseBadge=document.getElementById("caseInstalledBadge");
+  const caseFrame=document.querySelector(".sim2d-case-frame");
+  const psuStep=document.querySelector('.sim2d-progress-item[data-step-index="6"]');
+  const psuPart=document.querySelector('.sim2d-part[data-part="PSU"]');
 
   if(!startBtn||!installBtn||!zone||!status||!current||!hint)return;
 
@@ -146,10 +151,29 @@
     coolerPart?.classList.remove("is-active");
     caseStep?.classList.add("is-active");
     casePart?.classList.add("is-active");
-    status.textContent="Bước 5 hoàn tất";
+    caseFrame?.classList.add("is-active");
+    if(caseBtn)caseBtn.hidden=false;
+    status.textContent="Đang lắp Case";
+    status.classList.remove("is-done");
+    status.classList.add("is-active");
+    current.textContent="Bước hiện tại: Đưa Mainboard vào Case";
+    hint.innerHTML='Cooler đã hoàn tất. Đưa toàn bộ cụm <strong>Mainboard</strong> vào Case và bấm <strong>Đưa Mainboard vào Case</strong>.';
+  });
+
+  caseBtn?.addEventListener("click",()=>{
+    caseBtn.hidden=true;
+    if(caseBadge)caseBadge.hidden=false;
+    caseFrame?.classList.remove("is-active");
+    caseFrame?.classList.add("is-done");
+    caseStep?.classList.remove("is-active");
+    caseStep?.classList.add("is-done");
+    casePart?.classList.remove("is-active");
+    psuStep?.classList.add("is-active");
+    psuPart?.classList.add("is-active");
+    status.textContent="Bước 6 hoàn tất";
     status.classList.remove("is-active");
     status.classList.add("is-done");
-    current.textContent="Bước hiện tại: Cooler đã lắp";
-    hint.innerHTML='Cooler đã được cố định trên CPU. Bước tiếp theo là <strong>đưa cụm Mainboard vào Case</strong>.';
+    current.textContent="Bước hiện tại: Case đã cố định";
+    hint.innerHTML='Cụm Mainboard đã được cố định trong Case. Bước tiếp theo là <strong>lắp PSU</strong>.';
   });
 })();
