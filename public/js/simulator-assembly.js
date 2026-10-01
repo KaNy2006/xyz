@@ -36,6 +36,11 @@
   const caseFrame=document.querySelector(".sim2d-case-frame");
   const psuStep=document.querySelector('.sim2d-progress-item[data-step-index="6"]');
   const psuPart=document.querySelector('.sim2d-part[data-part="PSU"]');
+  const psuBtn=document.getElementById("installPsuBtn");
+  const psuZone=document.getElementById("psuZone");
+  const installedPsu=document.getElementById("installedPsu");
+  const gpuStep=document.querySelector('.sim2d-progress-item[data-step-index="7"]');
+  const gpuPart=document.querySelector('.sim2d-part[data-part="GPU"]');
 
   if(!startBtn||!installBtn||!zone||!status||!current||!hint)return;
 
@@ -170,10 +175,29 @@
     casePart?.classList.remove("is-active");
     psuStep?.classList.add("is-active");
     psuPart?.classList.add("is-active");
-    status.textContent="Bước 6 hoàn tất";
+    psuZone?.classList.add("is-active");
+    if(psuBtn)psuBtn.hidden=false;
+    status.textContent="Đang lắp PSU";
+    status.classList.remove("is-done");
+    status.classList.add("is-active");
+    current.textContent="Bước hiện tại: Lắp PSU";
+    hint.innerHTML='Case đã hoàn tất. Đưa <strong>PSU</strong> vào khoang nguồn rồi bấm <strong>Lắp PSU</strong>.';
+  });
+
+  psuBtn?.addEventListener("click",()=>{
+    psuBtn.hidden=true;
+    if(installedPsu)installedPsu.hidden=false;
+    psuZone?.classList.remove("is-active");
+    psuZone?.classList.add("is-done");
+    psuStep?.classList.remove("is-active");
+    psuStep?.classList.add("is-done");
+    psuPart?.classList.remove("is-active");
+    gpuStep?.classList.add("is-active");
+    gpuPart?.classList.add("is-active");
+    status.textContent="Bước 7 hoàn tất";
     status.classList.remove("is-active");
     status.classList.add("is-done");
-    current.textContent="Bước hiện tại: Case đã cố định";
-    hint.innerHTML='Cụm Mainboard đã được cố định trong Case. Bước tiếp theo là <strong>lắp PSU</strong>.';
+    current.textContent="Bước hiện tại: PSU đã lắp";
+    hint.innerHTML='PSU đã được cố định trong Case. Bước tiếp theo là <strong>lắp GPU</strong>.';
   });
 })();
